@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "421522072100",
+    "project_id": "consolidarapp",
+    "storage_bucket": "consolidarapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421522072100:android:2354d07a186ee89e472eb1",
+        "android_client_info": {
+          "package_name": "com.samedev.acolhimento"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421522072100-3c0bp6uuin9hl0l7pnk3f9osratdntsk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.samedev.acolhimento",
+            "certificate_hash": "fc57525082cbd93ad863f229adef1e3aa29ef845"
+          }
+        },
+        {
+          "client_id": "421522072100-84to9pnomtlqug78aeklqmt0g467gklu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1J2M_EMYDt_2H1z-YoNozqiXywTk-trQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421522072100-84to9pnomtlqug78aeklqmt0g467gklu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
