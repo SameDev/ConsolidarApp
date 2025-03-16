@@ -11,12 +11,14 @@ import {
   Button,
   Alert,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { db, collection,  getDocs } from "../firebaseConfig";
 import { FontAwesome } from "@expo/vector-icons";
 import {addDoc, deleteDoc, doc, query, where} from 'firebase/firestore';
 import ExpoCheckbox from "expo-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface Visit {
     id: string;
@@ -159,6 +161,13 @@ interface Visit {
       </View>
     );
   
+    const handleInputChange = (field: string, value: any) => {
+      setNewVisit((prevState) => ({
+      ...prevState,
+      [field]: value,
+      }));
+    };
+    const [showDatePicker, setShowDatePicker] = useState(false);
     return (
       <SafeAreaView style={styles.container}>
         <TouchableOpacity
@@ -202,16 +211,32 @@ interface Visit {
               onChangeText={(text) => setNewVisit({ ...newVisit, additionalPeople: text })}
             />
 
-            <TextInput
-              style={styles.input}
-              placeholder="Data da Visita (AAAA-MM-DD)"
-              value={newVisit.visitDate}
-              onChangeText={(text) => setNewVisit({ ...newVisit, visitDate: text })}
-            />
+            <Text style={{color: "#232323"}}>Data da visita:</Text>
+            <TouchableOpacity
+              style={styles.dateButton}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Text style={styles.dateButtonText}>
+                {newVisit.visitDate ? new Date(newVisit.visitDate).toLocaleDateString("pt-BR") : "Selecionar Data"}
+              </Text>
+            </TouchableOpacity>
+
+            {showDatePicker && (
+              <DateTimePicker
+                value={new Date(newVisit.visitDate)}
+                mode="date"
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                onChange={(event, selectedDate) => {
+                  setShowDatePicker(false);
+                  if (selectedDate) handleInputChange("visitDate", selectedDate);
+                }}
+              />
+            )}
 
             <View style={styles.checkboxContainer}>
               <ExpoCheckbox
                 value={newVisit.needsBibleStudy}
+                color="#C6B09D"
                 onValueChange={(value) => setNewVisit({ ...newVisit, needsBibleStudy: value })}
               />
               <Text style={styles.checkboxLabel}>Precisa de Estudo Bíblico?</Text>
@@ -332,5 +357,16 @@ const styles = StyleSheet.create({
   checkboxLabel: {
     marginLeft: 8,
     color: "#8c6d4f",
+  },
+  dateButton: {
+    backgroundColor: "#A56429",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  dateButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
   },
 });

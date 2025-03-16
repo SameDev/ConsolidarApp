@@ -15,12 +15,18 @@ import ViewVisitorsScreen from "./VisitorNavigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AdminScreen from "./AdminScreen";
 import VisitorNavigation from "./VisitorNavigation";
+import BibleStudyScreen from "./BibleStudiesScreen";
+import AddBibleStudy from "./AddBibleStudy";
+import StudyDetails from "./StudyDetailsScreen";
 
-type RootStackParamList = {
+export type RootStackParamList = {
     HomeScreenView: undefined;
     AddVisitor: undefined;
     ViewVisitors: undefined;
     AdminScreen: undefined;
+    BibleStudies: undefined;
+    AddBibleStudy: undefined;
+    StudyDetails: { study: { name: string; discipler: string; companion: string; startDate: string; local: string; } };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -67,7 +73,7 @@ function HomeScreenView({ navigation }: { navigation: any }) {
                 </TouchableHighlight>
 
                 <TouchableHighlight underlayColor="#FFC17D"
-                    style={styles.buttonSecondary}
+                    style={[styles.button, {backgroundColor: "#E9AA6D" }]}
                     onPress={() => navigation.navigate("ViewVisitors")}
                 >
                     <View style={styles.buttonContent}>
@@ -79,7 +85,7 @@ function HomeScreenView({ navigation }: { navigation: any }) {
                 </TouchableHighlight>
                 {cargo === "ADMIN" || cargo === "PASTORES" ? (
                     <TouchableHighlight underlayColor="#FFAD94"
-                        style={[styles.button, {backgroundColor: '#F28E6F', marginTop: 20, }]}
+                        style={[styles.button, {backgroundColor: '#F28E6F' }]}
                         onPress={() => navigation.navigate("AdminScreen")}
                     >
                         <View style={styles.buttonContent}>
@@ -90,6 +96,28 @@ function HomeScreenView({ navigation }: { navigation: any }) {
                         </View>
                     </TouchableHighlight>
                 ) : null}
+                <TouchableHighlight underlayColor="#FF8686"
+                    style={[styles.button, {backgroundColor: '#FF8686' }]}
+                    onPress={() => navigation.navigate("BibleStudies")}
+                >
+                    <View style={styles.buttonContent}>
+                        <FontAwesome6 name="book-bible" size={28} color="#FFF" />
+                        <Text style={[styles.buttonText, { color: "#fff" }]}>
+                            Acompanhar Estudos Bíblicos
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableHighlight underlayColor="#EE6363"
+                    style={[styles.button, {backgroundColor: '#EE6363' }]}
+                    onPress={() => navigation.navigate("ViewVisitors")}
+                >
+                    <View style={styles.buttonContent}>
+                        <FontAwesome6 name="child-reaching" size={30} color="#FFF" />
+                        <Text style={[styles.buttonText, { color: "#fff" }]}>
+                            Acompanhar Batizados/Aclamados
+                        </Text>
+                    </View>
+                </TouchableHighlight>
             </View>
             
         </SafeAreaView>
@@ -159,6 +187,21 @@ export default function HomeScreen() {
                     options={{ title: "Adicionar Visitante" }}
                     />
                 ) : null}
+                <Stack.Screen  
+                    name="BibleStudies"
+                    component={BibleStudyScreen}
+                    options={{ headerShown: true }}
+                />
+                <Stack.Screen 
+                    name="AddBibleStudy" 
+                    component={AddBibleStudy}
+                    options={{ headerShown: true }}     
+                />
+                <Stack.Screen 
+                    name="StudyDetails" 
+                    component={StudyDetails}
+                    options={{ headerShown: true }}     
+                />
             </Stack.Navigator>
     );
 }
@@ -169,6 +212,12 @@ function getHeaderTitle(routeName: string) {
             return "Adicionar Visitante";
         case "ViewVisitors":
             return "Visitantes";
+        case "BibleStudies":
+            return "Estudos Bíblicos";
+        case "AddBibleStudy":
+            return "Adicionar Novo Estudo Bíblico";
+        case "StudyDetails":
+            return "Detalhes do Estudo Bíblico";
         default:
             return "";
     }
@@ -215,7 +264,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 15,
         paddingVertical: 30,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     buttonSecondary: {
         backgroundColor: "#E9AA6D",

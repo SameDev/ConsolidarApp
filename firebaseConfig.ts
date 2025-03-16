@@ -1,4 +1,3 @@
-import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -18,12 +17,12 @@ import {
 
 // Configuração do Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyBoVIXLR-JZ0uIlixCHSe-XIPXrlFDjK3E",
+  apiKey: `${process.env.EXPO_PUBLIC_API_KEY}`,
   authDomain: "consolidarapp.firebaseapp.com",
   projectId: "consolidarapp",
   storageBucket: "consolidarapp.appspot.com",
   messagingSenderId: "421522072100",
-  appId: "1:421522072100:web:f883b7f37861fa06472eb1"
+  appId: `${process.env.EXPO_PUBLIC_APP_ID}`
 };
 
 const app = initializeApp(firebaseConfig);
@@ -31,7 +30,6 @@ const app = initializeApp(firebaseConfig);
 // Inicialização do Firebase
 const authFirebase = getAuth(app);
 const db = getFirestore(app);
-
 
 
 const saveUserToFirestore = async (fullName: string, email: string, cargo: string, uid: string) => {
@@ -49,9 +47,6 @@ const saveUserToFirestore = async (fullName: string, email: string, cargo: strin
   }
 };
 
-
-// Exportando os serviços e métodos
-// Exportando os serviços e métodos
 export {
     authFirebase,
     db,
@@ -62,5 +57,5 @@ export {
     doc,
     getDocs,
     deleteDoc,
-    updateDoc, 
+    updateDoc, addDoc,
 };
